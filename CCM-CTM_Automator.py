@@ -23,7 +23,7 @@ except Exception as e:
 
 # ✏️ Target company BD
 target_bd = """
-"Louis Dreyfus Company (LDC) is a global merchant and processor of agricultural goods. Established in 1851, it's a leading company in the agricultural sector, sourcing, transporting, and transforming products for customers worldwide. LDC operates across various business lines, including Coffee, Cotton, Freight, Food & Feed Solutions, Grains & Oilseeds, Juice, Rice, and Sugar. The company has a significant presence in India, established in 1997, and employs over 650 people in its Indian operations. "
+"ABC is a global merchant and processor of agricultural goods. It's a leading company in the agricultural sector, sourcing, transporting, and transforming products for customers worldwide. It operates across various business lines, including Coffee, Cotton, Freight, Food & Feed Solutions, Grains & Oilseeds, Juice, Rice, and Sugar. The company has a significant presence in India "
 """
 
 # 📂 Load Excel
@@ -58,7 +58,7 @@ for idx, row in tqdm(df.iterrows(), total=len(df), desc="🔍 Matching Companies
     prompt = f"""
 You are an equity research analyst evaluating potential acquisition targets for Louis Dreyfus, which is looking to expand it's operations into edible oils.
 
-LDC's objective is to acquire a company that operates in one or more of the following:
+The objective is to acquire a company that operates in one or more of the following:
 - Processing/refining of edible oils (e.g., palm, soybean, sunflower, mustard, groundnut)
 - Bulk or packaged oil distribution (domestic or export markets)
 - Crude oil import and refining infrastructure
