@@ -8,7 +8,7 @@ import os
 
 # 🔐 Gemini API Setup
 try:
-    genai.configure(api_key="AIzaSyDQItObHG6C80KP1-0-ZyaGZehcvHPN4tY")
+    genai.configure(api_key="YourApiKey")
     model = genai.GenerativeModel("gemini-2.5-flash-lite-preview-06-17")
 
     # 🔍 Test Gemini initialization
