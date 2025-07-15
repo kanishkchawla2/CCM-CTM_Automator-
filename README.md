@@ -1,240 +1,174 @@
-# AI-Powered Company Similarity Analysis Tool
+# 🚀 Business Classification Tool
 
-An intelligent business analysis tool that leverages Google's Gemini API to analyze and compare companies based on their business descriptions. This versatile tool can be used for various business intelligence purposes including market research, competitor analysis, acquisition targeting, partnership identification, and strategic planning.
+> *Turn your Excel spreadsheet into a smart business intelligence goldmine with AI-powered company analysis*
 
-## 🎯 Purpose
+## 🎯 What This Tool Does
 
-This tool helps businesses and analysts identify similar companies across various industries by analyzing business descriptions and providing AI-generated similarity scores. Whether you're conducting market research, identifying competitors, finding potential partners, or exploring acquisition opportunities, this tool provides data-driven insights to support your strategic decisions.
+Imagine having a brilliant business analyst who can read through hundreds of company descriptions and instantly tell you:
+- Which companies are most relevant to YOUR business
+- What each company actually does (in plain English)
+- How they make money and who they serve
+- Why they matter to you (or don't)
 
-## 🔧 Features
+That's exactly what this tool does, but faster and without coffee breaks.
 
-- **AI-Powered Analysis**: Uses Google Gemini 2.5 Flash Lite for intelligent company comparison
-- **Flexible Similarity Scoring**: Provides percentage-based similarity scores with detailed explanations
-- **Customizable Target Criteria**: Easily modify target company profile for different use cases
-- **Batch Processing**: Handles large datasets efficiently with chunked processing
-- **Progress Tracking**: Visual progress bars and comprehensive logging
-- **Error Handling**: Robust retry logic and automatic error recovery
-- **Excel Integration**: Seamless import/export with Excel files
-- **Scalable Architecture**: Designed to handle datasets of any size
+## 🔥 Key Features
 
-## 🚀 Use Cases
+### 🧠 **Smart AI Analysis**
+- Uses Google's Gemini AI to understand business descriptions
+- Compares every company against your target business
+- Generates relevance scores from 0-100%
 
-### 🔍 Market Research
-- Identify companies operating in similar market segments
-- Analyze competitive landscapes across industries
-- Discover emerging players in specific sectors
+### ⚡ **Production-Ready Performance**
+- Processes companies in batches of 3 for efficiency
+- Handles 4 API keys with automatic rotation
+- Built-in retry logic for reliable operation
+- Saves progress every 5 batches
 
-### 🤝 Partnership & Collaboration
-- Find potential business partners with complementary capabilities
-- Identify companies for joint ventures or strategic alliances
-- Locate suppliers or distributors in specific markets
+### 📊 **Organized Output**
+- Creates multiple Excel sheets by relevance score
+- High relevance (70%+), Medium (50-69%), Low (<50%)
+- Detailed analysis columns for each company
 
-### 📈 Investment & M&A
-- Screen acquisition targets based on business alignment
-- Evaluate portfolio companies for synergies
-- Identify investment opportunities in specific sectors
+## 🛠️ Quick Start
 
-### 🎯 Competitive Intelligence
-- Track competitor activities and market positioning
-- Benchmark against industry peers
-- Monitor market entry strategies
-
-### 📊 Industry Analysis
-- Categorize companies by business model similarity
-- Analyze industry consolidation opportunities
-- Study market fragmentation patterns
-
-## 📋 Requirements
-
-### Dependencies
+### Prerequisites
 ```bash
 pip install pandas google-generativeai tqdm openpyxl
 ```
 
-### Required Files
-- **Input Excel File**: Must contain "Company Name" and "Business Description" columns
-- **Google Gemini API Key**: Available from [Google AI Studio](https://makersuite.google.com/app/apikey)
-
-## 🚀 Setup
-
-1. **Install dependencies**
-   ```bash
-   pip install pandas google-generativeai tqdm openpyxl
-   ```
-
-2. **Configure API Key**
-   - Obtain a Google Gemini API key
-   - Replace the placeholder in the script:
-   ```python
-   genai.configure(api_key="YOUR_API_KEY_HERE")
-   ```
-
-3. **Prepare your data**
-   - Create an Excel file with columns: "Company Name" and "Business Description"
-   - Place the file in the same directory as the script
-
-## ⚙️ Configuration
-
-### Customizing Target Criteria
-
-The tool's flexibility lies in its customizable target company profile. Modify the `target_bd` variable to define your specific criteria:
-
+### Setup Your API Keys
 ```python
-target_bd = """
-Your target company description here. This can be:
-- A specific company profile you want to match against
-- Industry characteristics you're interested in
-- Business model attributes you're seeking
-- Geographic or operational criteria
-"""
+api_keys = [
+    "YOUR_GEMINI_API_KEY_1",
+    "YOUR_GEMINI_API_KEY_2", 
+    "YOUR_GEMINI_API_KEY_3",
+    "YOUR_GEMINI_API_KEY_4"
+]
 ```
 
-### Example Configurations
+### Input File Format
+Your Excel file (`BD_Oil2.xlsx`) needs:
+- **Company Name** column
+- **Business Description** column
 
-**Technology Startups:**
-```python
-target_bd = """
-A technology startup focused on SaaS solutions, cloud computing, 
-or digital transformation services. Typically serves enterprise 
-clients with scalable software products.
-"""
+### Run the Analysis
+```bash
+python business_classification.py
 ```
 
-**Manufacturing Companies:**
+## 📊 What You Get
+
+### Generated Columns
+- **Business Summary**: Clear 1-2 sentence explanation
+- **Industry Classification**: Primary sector/industry
+- **Business Model**: How they make money
+- **Key Products/Services**: What they actually sell
+- **Market Focus**: Geographic/segment focus
+- **Relevance Score**: 0-100% match to your target
+- **Relevance Reason**: Why this score makes sense
+
+### Output Sheets
+- **All_Companies**: Complete results sorted by relevance
+- **High_Relevance_70+**: Your top prospects
+- **Medium_Relevance_50-69**: Worth a second look
+- **Low_Relevance_Below_50**: Probably not relevant
+
+## 🎯 Target Company Configuration
+
+Currently set for **Gabriel India Limited** (automotive components). To change:
+
 ```python
-target_bd = """
-A manufacturing company involved in industrial production, 
-supply chain management, or specialized manufacturing processes 
-across automotive, aerospace, or consumer goods sectors.
-"""
+target_bd = """Your target company description here..."""
 ```
 
-**Healthcare & Biotech:**
+The AI will compare all companies against this reference.
+
+## ⚙️ Configuration Options
+
 ```python
-target_bd = """
-A healthcare or biotechnology company engaged in pharmaceutical 
-research, medical devices, digital health solutions, or 
-healthcare service delivery.
-"""
+batch_size = 3              # Companies per API call
+KEY_USAGE_LIMIT = 15        # Requests per key before rotation
+input_file = "BD_Oil2.xlsx" # Your input file
+output_file = "business_classifications.xlsx"
 ```
 
-## 📊 Usage
+## 🔄 How It Works
 
-1. **Customize your target criteria** in the `target_bd` variable
-2. **Run the analysis**
-   ```bash
-   python company_analyzer.py
-   ```
-3. **Monitor progress** through real-time logging and progress bars
-4. **Review results** in the generated Excel output file
+1. **Loads and validates** your Excel data
+2. **Processes in batches** of 3 companies at a time
+3. **Sends structured prompts** to Gemini AI
+4. **Parses JSON responses** into clean data
+5. **Handles errors** with automatic retries
+6. **Rotates API keys** to avoid rate limits
+7. **Saves organized results** to Excel with multiple sheets
 
-## 📈 Output Format
+## 🛡️ Error Handling
 
-The tool generates a comprehensive Excel report with:
-- **Company Name**: Original company identifier
-- **Business Description**: Complete business description
-- **Similarity Score (%)**: AI-calculated similarity percentage (0-100%)
-- **Reason for Score**: Detailed explanation of the similarity assessment
+- **API Failures**: 3 retry attempts with delays
+- **JSON Parsing**: Multiple extraction methods
+- **Rate Limits**: Automatic key rotation
+- **Data Validation**: Ensures clean relevance scores
+- **Progress Saves**: Intermediate backups every 5 batches
 
-## 🎯 Scoring Methodology
+## 📈 Performance Stats
 
-The AI evaluates companies based on:
-- **Business Model Alignment**: How closely the business models match
-- **Industry Overlap**: Shared industry sectors or market segments
-- **Operational Similarities**: Similar processes, technologies, or approaches
-- **Market Focus**: Geographic or demographic target market alignment
-- **Value Proposition**: Comparable customer value propositions
+- **Speed**: ~3 companies per API call
+- **Reliability**: Built-in retry and failover logic
+- **Memory**: Efficient batch processing
+- **Monitoring**: Real-time progress tracking
 
-## ⚙️ Advanced Configuration
+## 🔍 Sample Output
 
-### Processing Settings
-- **Chunk Size**: Modify batch processing size (default: 10 companies)
-- **API Delays**: Adjust timing between API calls for rate limiting
-- **Retry Logic**: Configure maximum retry attempts for failed requests
-
-### Custom Prompts
-Modify the prompt template to focus on specific aspects:
-```python
-prompt = f"""
-Your custom analysis instructions here.
-Focus on specific criteria relevant to your use case.
-"""
+```
+Company: TechCorp Solutions
+Business Summary: Provides cloud-based inventory management software for retail businesses
+Industry: Software/Technology
+Relevance Score: 15.50%
+Relevance Reason: Different industry focus (software vs automotive components) with no overlap in target markets
 ```
 
-## 🔍 Troubleshooting
+## 🚨 Important Notes
+
+- **API Keys**: Keep your Gemini API keys secure
+- **Rate Limits**: Tool handles this automatically
+- **Data Privacy**: Review company data handling policies
+- **Accuracy**: AI results should be validated for critical decisions
+- **Costs**: Monitor your Google Cloud API usage
+
+## 🔧 Troubleshooting
 
 ### Common Issues
+| Problem | Solution |
+|---------|----------|
+| API Key Error | Verify keys are active in Google AI Studio |
+| File Not Found | Ensure `BD_Oil2.xlsx` is in script directory |
+| Column Missing | Check for "Company Name" and "Business Description" columns |
+| JSON Parse Error | Usually resolves with retry, check for special characters |
 
-1. **API Authentication**
-   - Verify API key validity and permissions
-   - Check API quotas and billing status
+### Error Messages
+- `❌ Failed to initialize`: Check API key validity
+- `⚠️ Expected X, got Y`: Partial API response (will retry)
+- `❌ JSON parsing error`: Response format issue (will retry)
 
-2. **Data Format**
-   - Ensure Excel columns are named exactly: "Company Name" and "Business Description"
-   - Verify data encoding and special characters
+## 📊 Output Statistics
 
-3. **Performance**
-   - Adjust chunk sizes for large datasets
-   - Modify API delays based on rate limits
+The tool provides detailed stats:
+```
+📋 Summary:
+   • Total companies processed: 150
+   • High Relevance (70+): 12 companies
+   • Medium Relevance (50-69): 28 companies  
+   • Low Relevance (<50): 110 companies
+   • Overall average score: 34.56
+```
 
-### Debug Features
-- Comprehensive logging with emoji indicators
-- Real-time API response display
-- Data validation and error reporting
-- Automatic chunk file management
+## 🔄 Version Notes
 
-## 📊 Best Practices
-
-### Data Preparation
-- Ensure business descriptions are comprehensive and accurate
-- Clean and standardize company names
-- Remove duplicates before processing
-
-### Target Definition
-- Be specific about desired characteristics
-- Include both positive and negative criteria
-- Test with small datasets first
-
-### Result Interpretation
-- Review similarity scores in context
-- Validate high-scoring matches manually
-- Consider qualitative factors beyond the score
-
-## 🔐 Security & Privacy
-
-### API Key Management
-- Never commit API keys to version control
-- Use environment variables for production deployments
-- Rotate API keys regularly
-
-### Data Handling
-- Ensure compliance with data protection regulations
-- Consider data sensitivity when processing company information
-- Implement appropriate access controls
-
-## 📝 Logging & Monitoring
-
-The tool provides detailed logging including:
-- ✅ Successful operations
-- ⚠️ Warnings and notifications
-- ❌ Error conditions
-- 📊 Processing statistics
-- 🔍 Analysis progress
-
-## 🛠️ Extensibility
-
-### Adding New Features
-- Custom scoring algorithms
-- Additional AI models
-- Enhanced data visualization
-- Integration with other business tools
-
-### API Integration
-- CRM system connections
-- Database integrations
-- Real-time data feeds
-- Automated reporting
+- **Current**: Enhanced error handling and organized output
+- **Features**: Batch processing, multi-key support, progress saves
+- **Reliability**: Production-ready with comprehensive error handling
 
 ---
 
-*This tool is designed to augment human decision-making with AI-powered insights. Always combine automated analysis with expert judgment for critical business decisions.*
+*This tool transforms raw business data into actionable intelligence. Perfect for market research, partnership discovery, and competitive analysis.*
