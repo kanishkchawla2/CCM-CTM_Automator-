@@ -17,9 +17,34 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for better styling
+# Custom CSS for better styling and hiding GitHub button
 st.markdown("""
 <style>
+    /* Hide GitHub button and toolbar */
+    .stToolbar {
+        display: none;
+    }
+    
+    /* Alternative method to hide the entire header */
+    header[data-testid="stHeader"] {
+        display: none;
+    }
+    
+    /* Hide the main menu (hamburger menu) */
+    #MainMenu {
+        display: none;
+    }
+    
+    /* Hide footer */
+    footer {
+        display: none;
+    }
+    
+    /* Hide "Made with Streamlit" footer */
+    .streamlit-footer {
+        display: none;
+    }
+
     .main-header {
         background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
         padding: 2rem;
