@@ -423,31 +423,21 @@ st.markdown("""
 # Collapsible API Configuration Section
 st.markdown("---")
 
-# Create a styled header with toggle
-with st.container():
-    # Use columns for better alignment
-    col1, col2 = st.columns([1, 20])
-    
-    with col1:
-        # Styled toggle button
-        toggle_text = "🔽 Hide" if st.session_state.show_api_config else "▶️ Show"
-        if st.button(toggle_text, key="toggle_api_config", use_container_width=True):
-            st.session_state.show_api_config = not st.session_state.show_api_config
-            st.rerun()
-    
-    with col2:
-        st.markdown("### 🔐 API Configuration")
+# Simple header with toggle
+col1, col2 = st.columns([1, 4])
+with col1:
+    toggle_text = "🔽 Hide" if st.session_state.show_api_config else "▶️ Show"
+    if st.button(toggle_text, key="toggle_api_config"):
+        st.session_state.show_api_config = not st.session_state.show_api_config
+        st.rerun()
+
+with col2:
+    st.header("🔐 API Configuration")
 
 # Show/hide API configuration based on state
 if st.session_state.show_api_config:
-    # Create a styled container for the API configuration content
-    with st.container():
-        st.markdown("""
-        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 1rem;">
-        """, unsafe_allow_html=True)
-        
-        # Add API key input
-        new_api_key = st.text_input("Add Gemini API Key", type="password", placeholder="Enter your Gemini API key")
+    # Add API key input
+    new_api_key = st.text_input("Add Gemini API Key", type="password", placeholder="Enter your Gemini API key")
 
     # Buttons below the input field
     col1, col2 = st.columns(2)
@@ -487,8 +477,6 @@ if st.session_state.show_api_config:
     with config_col2:
         key_usage_limit = st.slider("Key Usage Limit", min_value=5, max_value=50, value=15,
                                     help="Number of API calls per key before rotation")
-        
-        st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("---")
 
