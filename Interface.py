@@ -596,19 +596,19 @@ with tab2:
         st.dataframe(filtered_df, use_container_width=True, height=400)
 
         # Download buttons
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)
         with col1:
-            # Full results
+            # Full results CSV
             csv = df_results.to_csv(index=False)
             st.download_button(
-                label="📥 Download Full Results (CSV)",
+                label="📥 Full Results (CSV)",
                 data=csv,
                 file_name=f"business_classifications_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
                 mime="text/csv"
             )
 
         with col2:
-            # Excel download
+            # Full results Excel
             output = io.BytesIO()
             with pd.ExcelWriter(output, engine='openpyxl') as writer:
                 df_results.to_excel(writer, sheet_name='All_Companies', index=False)
@@ -625,21 +625,49 @@ with tab2:
 
             output.seek(0)
             st.download_button(
-                label="📥 Download Excel (Multi-sheet)",
+                label="📥 Full Results (Excel)",
                 data=output,
                 file_name=f"business_classifications_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
 
         with col3:
-            # Filtered results
+            # Filtered results CSV
             if len(filtered_df) != len(df_results):
                 filtered_csv = filtered_df.to_csv(index=False)
                 st.download_button(
-                    label="📥 Download Filtered Results (CSV)",
+                    label="📥 Filtered Results (CSV)",
                     data=filtered_csv,
                     file_name=f"filtered_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
                     mime="text/csv"
+                )
+
+        with col4:
+            # Filtered results Excel
+            if len(filtered_df) != len(df_results):
+                filtered_output = io.BytesIO()
+                with pd.ExcelWriter(filtered_output, engine='openpyxl') as writer:
+                    filtered_df.to_excel(writer, sheet_name='Filtered_Results', index=False)
+                    
+                    # Add summary sheet with filter info
+                    summary_data = {
+                        'Filter Summary': [
+                            f'Total Companies: {len(df_results)}',
+                            f'Filtered Companies: {len(filtered_df)}',
+                            f'Minimum Score: {min_score}',
+                            f'Selected Industries: {", ".join(selected_industries) if selected_industries else "All"}',
+                            f'Export Date: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
+                        ]
+                    }
+                    summary_df = pd.DataFrame(summary_data)
+                    summary_df.to_excel(writer, sheet_name='Filter_Summary', index=False)
+                
+                filtered_output.seek(0)
+                st.download_button(
+                    label="📥 Filtered Results (Excel)",
+                    data=filtered_output,
+                    file_name=f"filtered_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 )
 
     else:
