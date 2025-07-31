@@ -596,7 +596,7 @@ with tab2:
         st.dataframe(filtered_df, use_container_width=True, height=400)
 
         # Download buttons
-        col1, col2, col3, col4 = st.columns(4)
+        col1, col2, col3 = st.columns(3)
         with col1:
             # Full results CSV
             csv = df_results.to_csv(index=False)
@@ -632,17 +632,6 @@ with tab2:
             )
 
         with col3:
-            # Filtered results CSV
-            if len(filtered_df) != len(df_results):
-                filtered_csv = filtered_df.to_csv(index=False)
-                st.download_button(
-                    label="📥 Filtered Results (CSV)",
-                    data=filtered_csv,
-                    file_name=f"filtered_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-                    mime="text/csv"
-                )
-
-        with col4:
             # Filtered results Excel
             if len(filtered_df) != len(df_results):
                 filtered_output = io.BytesIO()
