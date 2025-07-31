@@ -397,29 +397,23 @@ st.markdown("""
 st.markdown("---")
 st.header("🔐 API Configuration")
 
-# Create a container for better alignment
-with st.container():
-    # Create columns for API key management with better proportions
-    col1, col2, col3 = st.columns([3, 1, 1])
-    
-    with col1:
-        # Add API key input
-        new_api_key = st.text_input("Add Gemini API Key", type="password", placeholder="Enter your Gemini API key")
-    
-    with col2:
-        # Add button aligned with input
-        if st.button("➕ Add Key", use_container_width=True):
-            if new_api_key and new_api_key not in st.session_state.api_keys:
-                st.session_state.api_keys.append(new_api_key)
-                st.success("API key added!")
-                st.rerun()
-    
-    with col3:
-        # Clear button aligned with input
-        if st.button("🗑️ Clear All", use_container_width=True):
-            st.session_state.api_keys = []
-            st.success("All keys cleared!")
+# Add API key input
+new_api_key = st.text_input("Add Gemini API Key", type="password", placeholder="Enter your Gemini API key")
+
+# Buttons below the input field
+col1, col2 = st.columns(2)
+with col1:
+    if st.button("➕ Add Key", use_container_width=True):
+        if new_api_key and new_api_key not in st.session_state.api_keys:
+            st.session_state.api_keys.append(new_api_key)
+            st.success("API key added!")
             st.rerun()
+
+with col2:
+    if st.button("🗑️ Clear All", use_container_width=True):
+        st.session_state.api_keys = []
+        st.success("All keys cleared!")
+        st.rerun()
 
 # Display current API keys
 if st.session_state.api_keys:
