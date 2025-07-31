@@ -424,7 +424,7 @@ st.markdown("""
 st.markdown("---")
 
 # Simple header with toggle
-col1, col2 = st.columns([1, 4])
+col1, col2 = st.columns([1, 2])
 with col1:
     toggle_text = "🔽 Hide" if st.session_state.show_api_config else "▶️ Show"
     if st.button(toggle_text, key="toggle_api_config"):
