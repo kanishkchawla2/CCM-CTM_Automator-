@@ -20,11 +20,14 @@ st.set_page_config(
 # Custom CSS for better styling and hiding GitHub button
 st.markdown("""
 <style>
-    /* Hide GitHub button - multiple approaches */
+    /* Hide GitHub button - comprehensive approach */
     button[aria-label="View the source code of this app in a repository"] {
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
+        top: -9999px !important;
     }
     
     /* Hide GitHub button by class */
@@ -32,6 +35,9 @@ st.markdown("""
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
+        top: -9999px !important;
     }
     
     /* Hide the entire toolbar */
@@ -39,6 +45,29 @@ st.markdown("""
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
+        top: -9999px !important;
+    }
+    
+    /* Hide any element with GitHub-related text */
+    button:contains("GitHub"), button:contains("github") {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
+        top: -9999px !important;
+    }
+    
+    /* Hide elements with specific data attributes */
+    [data-testid="stToolbar"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
+        top: -9999px !important;
     }
     
     /* Hide the main menu (hamburger menu) */
