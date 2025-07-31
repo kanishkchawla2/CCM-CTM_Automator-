@@ -423,16 +423,22 @@ st.markdown("""
 # Collapsible API Configuration Section
 st.markdown("---")
 
-# Simple header with toggle
-col1, col2 = st.columns([1, 2])
-with col1:
-    toggle_text = "🔽 Hide" if st.session_state.show_api_config else "▶️ Show"
-    if st.button(toggle_text, key="toggle_api_config"):
-        st.session_state.show_api_config = not st.session_state.show_api_config
-        st.rerun()
+# Compact header with inline toggle
+st.markdown("""
+<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+    <div style="display: inline-block;">
+""", unsafe_allow_html=True)
 
-with col2:
-    st.header("🔐 API Configuration")
+toggle_text = "🔽 Hide" if st.session_state.show_api_config else "▶️ Show"
+if st.button(toggle_text, key="toggle_api_config"):
+    st.session_state.show_api_config = not st.session_state.show_api_config
+    st.rerun()
+
+st.markdown("""
+    </div>
+    <h2 style="margin: 0; display: inline-block;">🔐 API Configuration</h2>
+</div>
+""", unsafe_allow_html=True)
 
 # Show/hide API configuration based on state
 if st.session_state.show_api_config:
