@@ -14,21 +14,28 @@ st.set_page_config(
     page_title="Business Classification Tool",
     page_icon="🏢",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
 # Custom CSS for better styling and hiding GitHub button
 st.markdown("""
 <style>
-    /* Hide GitHub button specifically */
+    /* Hide GitHub button - multiple approaches */
     button[aria-label="View the source code of this app in a repository"] {
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
     }
     
-    /* Hide GitHub button by specific class and aria-label combination */
-    .stToolbarButton[aria-label="View the source code of this app in a repository"] {
+    /* Hide GitHub button by class */
+    .stToolbarButton {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+    
+    /* Hide the entire toolbar */
+    .stToolbar {
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
@@ -47,6 +54,11 @@ st.markdown("""
     /* Hide "Made with Streamlit" footer */
     .streamlit-footer {
         display: none;
+    }
+    
+    /* Hide sidebar completely */
+    section[data-testid="stSidebar"] {
+        display: none !important;
     }
 
     .main-header {
@@ -352,50 +364,57 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Sidebar for configuration
-with st.sidebar:
-    st.header("⚙️ Configuration")
+# API Keys Management Section
+st.markdown("---")
+st.header("🔐 API Configuration")
 
-    # API Keys Management
-    st.subheader("🔐 Gemini API Keys")
+# Create columns for API key management
+col1, col2 = st.columns([2, 1])
 
+with col1:
     # Add API key input
-    new_api_key = st.text_input("Add API Key", type="password", placeholder="Enter your Gemini API key")
+    new_api_key = st.text_input("Add Gemini API Key", type="password", placeholder="Enter your Gemini API key")
 
-    col1, col2 = st.columns(2)
-    with col1:
+with col2:
+    # Add and Clear buttons
+    add_col1, add_col2 = st.columns(2)
+    with add_col1:
         if st.button("➕ Add Key"):
             if new_api_key and new_api_key not in st.session_state.api_keys:
                 st.session_state.api_keys.append(new_api_key)
                 st.success("API key added!")
                 st.rerun()
-
-    with col2:
+    with add_col2:
         if st.button("🗑️ Clear All"):
             st.session_state.api_keys = []
             st.success("All keys cleared!")
             st.rerun()
 
-    # Display current API keys
-    if st.session_state.api_keys:
-        st.write(f"**Current Keys:** {len(st.session_state.api_keys)}")
-        for i, key in enumerate(st.session_state.api_keys):
-            col1, col2 = st.columns([3, 1])
-            with col1:
-                st.code(f"Key {i + 1}: {key[:8]}...{key[-4:]}", language="text")
-            with col2:
-                if st.button("❌", key=f"remove_{i}"):
-                    st.session_state.api_keys.pop(i)
-                    st.rerun()
-    else:
-        st.warning("No API keys added yet")
+# Display current API keys
+if st.session_state.api_keys:
+    st.write(f"**Current Keys:** {len(st.session_state.api_keys)}")
+    for i, key in enumerate(st.session_state.api_keys):
+        key_col1, key_col2 = st.columns([3, 1])
+        with key_col1:
+            st.code(f"Key {i + 1}: {key[:8]}...{key[-4:]}", language="text")
+        with key_col2:
+            if st.button("❌", key=f"remove_{i}"):
+                st.session_state.api_keys.pop(i)
+                st.rerun()
+else:
+    st.warning("No API keys added yet")
 
-    # Processing Configuration
-    st.subheader("⚙️ Processing Settings")
+# Processing Configuration
+st.subheader("⚙️ Processing Settings")
+config_col1, config_col2 = st.columns(2)
+with config_col1:
     batch_size = st.slider("Batch Size", min_value=1, max_value=10, value=3,
                            help="Number of companies to process in each batch")
+with config_col2:
     key_usage_limit = st.slider("Key Usage Limit", min_value=5, max_value=50, value=15,
                                 help="Number of API calls per key before rotation")
+
+st.markdown("---")
 
 # Main content area
 tab1, tab2, tab3 = st.tabs(["📁 Upload & Process", "📊 Results", "📈 Analytics"])
