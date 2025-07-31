@@ -20,14 +20,14 @@ st.set_page_config(
 # Custom CSS for better styling and hiding GitHub button
 st.markdown("""
 <style>
-    /* Hide GitHub button and toolbar */
-    .stToolbar {
-        display: none;
+    /* Hide only the GitHub button specifically */
+    button[aria-label="View the source code of this app in a repository"] {
+        display: none !important;
     }
     
-    /* Alternative method to hide the entire header */
-    header[data-testid="stHeader"] {
-        display: none;
+    /* Alternative method to hide GitHub button */
+    .stToolbarButton[aria-label="View the source code of this app in a repository"] {
+        display: none !important;
     }
     
     /* Hide the main menu (hamburger menu) */
