@@ -89,6 +89,31 @@ st.markdown("""
     section[data-testid="stSidebar"] {
         display: none !important;
     }
+    
+    /* Style for collapsible sections */
+    .collapsible-header {
+        background: linear-gradient(90deg, #f8fafc 0%, #e2e8f0 100%);
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        margin-bottom: 1rem;
+    }
+    
+    /* Style for toggle buttons */
+    .toggle-button {
+        background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .toggle-button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+    }
 
     .main-header {
         background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
@@ -398,20 +423,31 @@ st.markdown("""
 # Collapsible API Configuration Section
 st.markdown("---")
 
-# Toggle button for API configuration
-col1, col2 = st.columns([1, 4])
-with col1:
-    if st.button("🔽" if st.session_state.show_api_config else "▶️", key="toggle_api_config"):
-        st.session_state.show_api_config = not st.session_state.show_api_config
-        st.rerun()
-
-with col2:
-    st.header("🔐 API Configuration")
+# Create a styled header with toggle
+with st.container():
+    # Use columns for better alignment
+    col1, col2 = st.columns([1, 20])
+    
+    with col1:
+        # Styled toggle button
+        toggle_text = "🔽 Hide" if st.session_state.show_api_config else "▶️ Show"
+        if st.button(toggle_text, key="toggle_api_config", use_container_width=True):
+            st.session_state.show_api_config = not st.session_state.show_api_config
+            st.rerun()
+    
+    with col2:
+        st.markdown("### 🔐 API Configuration")
 
 # Show/hide API configuration based on state
 if st.session_state.show_api_config:
-    # Add API key input
-    new_api_key = st.text_input("Add Gemini API Key", type="password", placeholder="Enter your Gemini API key")
+    # Create a styled container for the API configuration content
+    with st.container():
+        st.markdown("""
+        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 1rem;">
+        """, unsafe_allow_html=True)
+        
+        # Add API key input
+        new_api_key = st.text_input("Add Gemini API Key", type="password", placeholder="Enter your Gemini API key")
 
     # Buttons below the input field
     col1, col2 = st.columns(2)
@@ -451,6 +487,8 @@ if st.session_state.show_api_config:
     with config_col2:
         key_usage_limit = st.slider("Key Usage Limit", min_value=5, max_value=50, value=15,
                                     help="Number of API calls per key before rotation")
+        
+        st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("---")
 
