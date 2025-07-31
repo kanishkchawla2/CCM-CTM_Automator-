@@ -429,14 +429,13 @@ st.markdown("""
     <div style="display: inline-block;">
 """, unsafe_allow_html=True)
 
-toggle_text = "🔽 Hide" if st.session_state.show_api_config else "▶️ Show"
+toggle_text = "🔐 API Configuration" if st.session_state.show_api_config else "🔐 API Configuration"
 if st.button(toggle_text, key="toggle_api_config"):
     st.session_state.show_api_config = not st.session_state.show_api_config
     st.rerun()
 
 st.markdown("""
     </div>
-    <h2 style="margin: 0; display: inline-block;">🔐 API Configuration</h2>
 </div>
 """, unsafe_allow_html=True)
 
