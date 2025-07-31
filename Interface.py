@@ -421,11 +421,10 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Collapsible API Configuration Section
-st.markdown("---")
 
 # Compact header with inline toggle
 st.markdown("""
-<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+<div style="display: flex; align-items: center; gap: 10px; margin: 0;">
     <div style="display: inline-block;">
 """, unsafe_allow_html=True)
 
